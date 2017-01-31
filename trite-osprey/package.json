@@ -1,0 +1,26 @@
+{
+  "name": "trite-osprey",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "0.8.5",
+    "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "cors": "^2.8.1",
+    "express": "^4.14.1",
+    "morgan": "^1.7.0",
+    "pg-promise": "^5.5.5",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  },
+  "scripts": {
+    "db:init": "psql beermo < ../backend/schema.sql",
+    "start": "react-scripts start",
+    "db:start": "node database/server.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
