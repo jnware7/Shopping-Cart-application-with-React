@@ -16,8 +16,8 @@
     "react-dom": "^15.4.2"
   },
   "scripts": {
-    "db:init": "psql beermo < ../backend/schema.sql",
-    "start": "react-scripts start",
+    "db:init": "psql < ./backend/schema.sql",
+    "start": "react-scripts start & npm run db:start",
     "db:start": "node database/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

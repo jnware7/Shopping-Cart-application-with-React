@@ -36,7 +36,7 @@ const Beermo = {
   updateOne: (beername,price,category,description,brewery) => {
     return db.none(UPDATE_ONE,[id,beername,price,category,description,brewery])
   },
-  
+
   getOne: (id) => {
     return db.one(GET_ONE,[id])
   }

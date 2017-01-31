@@ -11,8 +11,6 @@ app.use(bodyParser.urlencoded({extended:false}))
 //the glue between express and react server
 app.use(cors())
 
-
-
 app.get('/beers', function(req,res) {
   Beermo.getAll()
   .then((results) =>
@@ -20,7 +18,7 @@ app.get('/beers', function(req,res) {
   )
 })
 
-app.get('/:id', function(req,res) {
+app.get('/beers/:id', function(req,res) {
   const id = req.params.id
   Beermo.getOne(id)
   .then((results) =>
