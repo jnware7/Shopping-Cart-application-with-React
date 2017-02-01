@@ -59,6 +59,6 @@ app.put('/:id', function(req,res) {
   )
 })
 
-app.listen(5000, function(){
+app.listen(5000, function() {
   console.log('Database for Beermo is listening on port 5000!')
 })

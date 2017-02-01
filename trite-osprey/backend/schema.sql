@@ -15,4 +15,4 @@ CREATE TABLE beermo (
 );
 
 INSERT INTO beermo (Brewery, Beername, Price)
-  VALUES ('Lagunitas', 'IPA', 5)
+  VALUES ('Lagunitas', 'IPA', 5),('Modelo', 'Especial', 3),('Lucky Devil', 'Old 666', 6)
