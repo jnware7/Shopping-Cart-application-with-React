@@ -6,13 +6,14 @@ CREATE DATABASE beermo;
 DROP TABLE IF EXISTS beermo;
 CREATE TABLE beermo (
   id SERIAL PRIMARY KEY,
-  Brewery VARCHAR,
-  Beername VARCHAR NOT NULL,
-  Price INT NOT NULL,
-  Category VARCHAR,
-  Description VARCHAR,
-  ABU DECIMAL
+  brewery VARCHAR,
+  beername VARCHAR NOT NULL,
+  image VARCHAR,
+  price INT NOT NULL,
+  category VARCHAR,
+  description VARCHAR,
+  abu DECIMAL
 );
 
-INSERT INTO beermo (Brewery, Beername, Price)
-  VALUES ('Lagunitas', 'IPA', 5),('Modelo', 'Especial', 3),('Lucky Devil', 'Old 666', 6)
+INSERT INTO beermo (brewery, beername, price, image)
+  VALUES ('Lagunitas', 'IPA', 5, 'India_Pale_Ale'),('Modelo', 'Especial', 3, 'Especial'),('PBR', 'Old 666', 6, 'Pabst_Blue_Ribbon')

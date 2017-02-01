@@ -14,7 +14,7 @@ app.use(cors())
 app.get('/beers', function(req,res) {
   Beermo.getAll()
   .then((results) =>
-    res.json({results})
+    res.json(results)
   )
 })
 
@@ -22,7 +22,7 @@ app.get('/beers/:id', function(req,res) {
   const id = req.params.id
   Beermo.getOne(id)
   .then((results) =>
-    res.json({results})
+    res.json(results)
   )
 })
 
