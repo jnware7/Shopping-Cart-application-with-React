@@ -1,16 +1,28 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
+
 
 class List extends React.Component{
+
+  static PropTypes = {
+    beers: PropTypes.array.isRequire
+  }
+
   constructor(props) {
     super(props)
     this.state = {
       beers : [],
+      currentBeer: null,
       searchString: '',
       visible: false,
+      active: this.props.active || 0
     }
   }
 
-  componentDidMount() {
+  updateCurrentBeer(beerIndex) {
+
+  }
+
+  componentWillMount() {
     this.getAllBeers()
   }
 
@@ -24,7 +36,6 @@ class List extends React.Component{
       this.setState({
         beers: results
       })
-      console.log('fetch log', this.state.beers);
     })
   }
 
@@ -36,41 +47,22 @@ class List extends React.Component{
     this.setState({visible: false})
   }
 
-  show() {
-    this.setState({visible: true})
+  handleClick(event) {
+    let node = Array.prototype.slice.call(event.currentTarget.children);
+    let index = node.indexOf(event.target)
+    this.setState({visible: true, active: index, currentBeer: this.state.beers[index] })
   }
 
+  componentDidMount() {
+      console.log('beers', this.state.beers)
+      if ( this.state.beers[0] ) {
+         let firstBeerName = this.state.beers[0].beername
+         console.log(firstBeerName);
+       }
+  }
 
   render() {
-    console.log('render log', this.state.beers);
-
-    // let beerlist = this.state.beers.results
-    // let beerDomElements
-
-    // for ( var beer in beerlist ) {
-    //   <li key={beer.id} beername={beer.beername}> {beer.beername} </li>
-    // }
-
-    //   if (beerlist) { beerDomElements = beerlist.map( (beer, index) =>
-    //     <li
-    //       key={beer.id}
-    //       beername={beer.beername}
-    //       index={index}
-    //     > {beer.beername} </li>
-    //   )
-    // }
-    // else {beerDomElements = null}
-
-
-  //   if (this.state.beers) { beerlist = this.state.beers.( (beer, index) =>
-  //     <li
-  //       key={beer.id}
-  //       beername={beer.beername}
-  //       index={index}
-  //     > {beer.beername} </li>
-  //   )
-  // }
-  //   else { beerlist = null}
+    // const {beers} = this.props.beers
 
     let beers  = this.state.beers,
         searchString = this.state.searchString.trim().toLowerCase()
@@ -81,7 +73,36 @@ class List extends React.Component{
       })
     }
 
-    return(
+    let firstBeer = beers[0]
+
+    console.log('these are the beers', beers);
+
+    if ( beers[0] ) {
+       let firstBeerName = beers[0].beername
+       console.log(firstBeerName);
+     }
+
+    const currentBeerDiv = this.state.currentBeer ? <div className={this.state.visible ? "popout" : "invisible"}>
+      <button onClick={this.hide.bind(this)} className="closebutton">X</button>
+      <div>{this.state.currentBeer.brewery}</div>
+      <div className='center_section'>
+          <div className='container_left'>
+            <img src={process.env.PUBLIC_URL + `/images/${this.state.currentBeer.image}.jpg`} style={{width: 180, height: 225}} alt="broken" />
+          </div>
+
+          <div className='container_right'>
+            <div> {this.state.currentBeer.beername} </div>
+            <div>{this.state.currentBeer.category}</div>
+            <div>{this.state.currentBeer.abu}</div>
+            <div> ${this.state.currentBeer.price}.00 </div>
+          </div>
+      </div>
+      <div>{this.state.currentBeer.description}</div>
+      <button className="addtocart">Add to Cart</button>
+    </div>
+    : null
+
+     return(
 
         <div>
 
@@ -92,7 +113,7 @@ class List extends React.Component{
             placeholder="Search beer"
           />
 
-          <ul onClick={this.show.bind(this)}>
+          <ul onClick={this.handleClick.bind(this)} >
             {beers.map(function(value) {
               return <li className="listclass">
                 {value.brewery + ' ' + value.beername}
@@ -101,17 +122,8 @@ class List extends React.Component{
             })}
 
           </ul>
+          {currentBeerDiv}
 
-          <div className={this.state.visible ? "popout" : "invisible"}>
-            <button onClick={this.hide.bind(this)} className="closebutton">X</button>
-            <div>Image</div>
-            <div>Header + Beername</div>
-            <div>Brewery</div>
-            <div>Description</div>
-            <div>ABU</div>
-            <div>Price</div>
-            <button className="addtocart">Add to Cart</button>
-          </div>
 
 
         </div>
