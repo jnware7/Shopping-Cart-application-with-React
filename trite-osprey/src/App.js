@@ -5,33 +5,6 @@ import List from './List'
 import './App.css';
 
 class App extends Component {
-  // constructor(props) {
-  //   super(props)
-  //
-  //   this.state = {
-  //     Beers : []
-  //   }
-  //
-  // }
-
-//   componentDidMount() {
-//     this.getAllBeers()
-//   }
-//
-// // initial fetch to retrive stored Beers from DB.
-//   getAllBeers() {
-//     fetch('http://localhost:5000/beers',{
-//       method: 'get',
-//     })
-//     .then(response => response.json())
-//     .then(results => {
-//       this.setState({
-//         Beers: results
-//       })
-//     })
-//   }
-
-
 
 
   render() {
