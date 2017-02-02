@@ -5,7 +5,8 @@ class List extends React.Component{
     super(props)
     this.state = {
       beers : [],
-      searchString: ''
+      searchString: '',
+      visible: false,
     }
   }
 
@@ -30,6 +31,15 @@ class List extends React.Component{
   handleChange(event) {
     this.setState( { searchString: event.target.value} )
   }
+
+  hide() {
+    this.setState({visible: false})
+  }
+
+  show() {
+    this.setState({visible: true})
+  }
+
 
   render() {
     console.log('render log', this.state.beers);
@@ -82,14 +92,26 @@ class List extends React.Component{
             placeholder="Search beer"
           />
 
-          <ul>
+          <ul onClick={this.show.bind(this)}>
             {beers.map(function(value) {
-              return <div>
-                {value.beername}
-                <img src={process.env.PUBLIC_URL + `/images/${value.image}.jpg`} style={{width: 180, height: 225}} alt="broken" />
-              </div>
+              return <li className="listclass">
+                {value.brewery + ' ' + value.beername}
+                <img src={process.env.PUBLIC_URL + `/images/${value.image}.jpg`} style={{width: 30, height: 45}} alt="broken" />
+              </li>
             })}
+
           </ul>
+
+          <div className={this.state.visible ? "popout" : "invisible"}>
+            <button onClick={this.hide.bind(this)} className="closebutton">X</button>
+            <div>Image</div>
+            <div>Header + Beername</div>
+            <div>Brewery</div>
+            <div>Description</div>
+            <div>ABU</div>
+            <div>Price</div>
+            <button className="addtocart">Add to Cart</button>
+          </div>
 
 
         </div>
@@ -99,18 +121,3 @@ class List extends React.Component{
 }
 
 export default List
-
-//to import an image
-  // let cardBack = <img src={process.env.PUBLIC_URL + "/cards/poke.jpg"} style={{width: 180, height: 225}} alt="broken" />
-
-  // const { beers } = this.props
-// <tbody>
-//   {/* { beers.map((beer) =>
-//   <Beer
-//     key={beer.id}
-//     {...beer}
-//   />
-// )} */}
-//
-// Hi
-// </tbody>

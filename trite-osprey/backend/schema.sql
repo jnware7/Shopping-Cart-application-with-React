@@ -16,4 +16,4 @@ CREATE TABLE beermo (
 );
 
 INSERT INTO beermo (brewery, beername, price, image)
-  VALUES ('Lagunitas', 'IPA', 5, 'India_Pale_Ale'),('Modelo', 'Especial', 3, 'Especial'),('PBR', 'Old 666', 6, 'Pabst_Blue_Ribbon')
+  VALUES ('Lagunitas', 'IPA', 5, 'India_Pale_Ale'),('Modelo', 'Especial', 3, 'Especial'),('Pabst', 'Blue Ribbon', 6, 'Pabst_Blue_Ribbon')
