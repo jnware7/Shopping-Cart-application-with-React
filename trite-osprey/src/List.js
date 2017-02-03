@@ -12,7 +12,7 @@ class List extends React.Component{
       visible: false,
       active: this.props.active || 0,
       cartPriceArray: [],
-      beerList:[],
+      beerList: [],
       totalPrice: 0
     }
   }
@@ -49,19 +49,23 @@ class List extends React.Component{
   }
 
   addToCart(event){
-    let { cartPriceArray, currentBeer } = this.state,
-        newCartPriceArray = cartPriceArray.push(currentBeer.price),
-        totalPriceArray = cartPriceArray.reduce((a,b) => a + b),
-        newBeerList = this.state.beerList.push(currentBeer.beername)
+    let { cartPriceArray, currentBeer, beerList } = this.state
+    console.log('cartPriceArray', cartPriceArray);
+    cartPriceArray.push(currentBeer.price)
+    const totalPriceArray = this.reduceFunction(cartPriceArray)
+    beerList.push(currentBeer.beername)
+
 
     this.setState({
-      cartPriceArray: newCartPriceArray,
+      cartPriceArray,
       totalPrice: totalPriceArray,
-      beerList: newBeerList
+      beerList
     })
   }
 
-
+  reduceFunction(array) {
+    return array.reduce((a,b) => a + b)
+  }
 
   removeFromCart(event){
     this.setState({cartValue: this.state.cartValue - this.state.currentBeer.price,
@@ -80,7 +84,8 @@ class List extends React.Component{
     // const {beers} = this.props.beers
 
     let beers  = this.state.beers,
-        searchString = this.state.searchString.trim().toLowerCase()
+        searchString = this.state.searchString.trim().toLowerCase(),
+        beerList = this.state.beerList
 
     if (searchString.length > 0) {
       beers = beers.filter(function(value) {
@@ -128,7 +133,15 @@ class List extends React.Component{
               <Cart />
               ${'' + this.state.totalPrice}
 
-              <ul>   {this.state.beerList}  </ul>
+              <ul onClick={this.addToCart.bind(this)} >
+                {beerList.map(function(value) {
+                  return (
+                    <li>
+                      {value}
+                    </li>
+                  )
+                })}
+              </ul>
 
             </div>
 
