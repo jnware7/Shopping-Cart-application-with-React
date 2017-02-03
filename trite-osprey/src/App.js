@@ -4,6 +4,7 @@ import beerbottle from '../public/beerbottle.png'
 import List from './List'
 import './App.css';
 
+
 class App extends Component {
 
 
@@ -21,7 +22,5 @@ class App extends Component {
     );
   }
 }
-
-// beers={this.state.Beers}
 
 export default App;

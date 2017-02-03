@@ -40,26 +40,25 @@ ul{
 ul li{
   display: flex;
   justify-content: space-between;
-  border:6px solid black;
+  border:6px solid #222;
   display: block;
   padding: 15px 20px;
   margin-bottom: 3px;
   position: relative;
   font:14px normal Arial, san-serif;
-  color: black;
+  color: #222;
   background-color: #fff;
 }
 
 input[type = text]{
   text-align: center;
-  /*border:6px solid black;*/
   padding: 13px 12px;
   font-size: 15px;
   box-shadow: 0 1px #ddd;
   width:384px;
   outline: none;
   display:block;
-  color:black;
+  color:#222;
   margin: 0 auto 20px;
   margin-top: 20px;
 }
@@ -69,18 +68,20 @@ ul li:hover{
   cursor: pointer;
 
 }
+
 .center_section{
   display: flex;
-  flex-direction: row;
   justify-content: space-around;
+
 }
 .container_left{
   display:flex;
-justify-content: space-around;
+  justify-content: space-around;
 }
 .container_right{
   display: flex;
   justify-content: space-around;
+  align-items: flex-start;
   flex-direction: column;
 }
 .popout {
@@ -89,13 +90,33 @@ justify-content: space-around;
   z-index: 2;
   width: 500px;
   height: 500px;
-  border:6px solid black;
+  border:6px solid #222;
   background-color: #fff;
   position: absolute;
   top: 275px;
   left: 320px;
+  /*padding:1em;*/
 }
 
 .invisible {
   display: none;
+}
+
+button{
+  color: white;
+  background-color: #222;
+}
+.cartContainer{
+ display: flex;
+ flex-direction: row;
+ justify-content: flex-end;
+ padding:2em;
+}
+.price{
+  display: flex;
+  flex-direction: column;
+}
+.beercartlist{
+  display: flex;
+  flex-direction: row;
 }

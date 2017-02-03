@@ -1,11 +1,7 @@
-import React, {PropTypes} from 'react';
-
+import React from 'react';
+import Cart from './Cart';
 
 class List extends React.Component{
-
-  static PropTypes = {
-    beers: PropTypes.array.isRequire
-  }
 
   constructor(props) {
     super(props)
@@ -14,12 +10,11 @@ class List extends React.Component{
       currentBeer: null,
       searchString: '',
       visible: false,
-      active: this.props.active || 0
+      active: this.props.active || 0,
+      cartPriceArray: [],
+      beerList:[],
+      totalPrice: 0
     }
-  }
-
-  updateCurrentBeer(beerIndex) {
-
   }
 
   componentWillMount() {
@@ -53,13 +48,33 @@ class List extends React.Component{
     this.setState({visible: true, active: index, currentBeer: this.state.beers[index] })
   }
 
-  componentDidMount() {
-      console.log('beers', this.state.beers)
-      if ( this.state.beers[0] ) {
-         let firstBeerName = this.state.beers[0].beername
-         console.log(firstBeerName);
-       }
+  addToCart(event){
+    let { cartPriceArray, currentBeer } = this.state,
+        newCartPriceArray = cartPriceArray.push(currentBeer.price),
+        totalPriceArray = cartPriceArray.reduce((a,b) => a + b),
+        newBeerList = this.state.beerList.push(currentBeer.beername)
+
+    this.setState({
+      cartPriceArray: newCartPriceArray,
+      totalPrice: totalPriceArray,
+      beerList: newBeerList
+    })
   }
+
+
+
+  removeFromCart(event){
+    this.setState({cartValue: this.state.cartValue - this.state.currentBeer.price,
+    list: this.state.list - this.state.currentBeer.beername})
+  }
+
+  // componentDidMount() {
+  //     console.log('beers', this.state.beers)
+  //     if ( this.state.beers[0] ) {
+  //        let firstBeerName = this.state.beers[0].beername
+  //        console.log(firstBeerName);
+  //      }
+  // }
 
   render() {
     // const {beers} = this.props.beers
@@ -69,23 +84,18 @@ class List extends React.Component{
 
     if (searchString.length > 0) {
       beers = beers.filter(function(value) {
-        return value.beername.toLowerCase().match( searchString )
+        return value.beername.toLowerCase().match( searchString ) || value.brewery.toLowerCase().match( searchString )
       })
     }
 
-    let firstBeer = beers[0]
-
-    console.log('these are the beers', beers);
-
-    if ( beers[0] ) {
-       let firstBeerName = beers[0].beername
-       console.log(firstBeerName);
-     }
-
     const currentBeerDiv = this.state.currentBeer ? <div className={this.state.visible ? "popout" : "invisible"}>
+
       <button onClick={this.hide.bind(this)} className="closebutton">X</button>
+
       <div>{this.state.currentBeer.brewery}</div>
+
       <div className='center_section'>
+
           <div className='container_left'>
             <img src={process.env.PUBLIC_URL + `/images/${this.state.currentBeer.image}.jpg`} style={{width: 180, height: 225}} alt="broken" />
           </div>
@@ -93,18 +103,36 @@ class List extends React.Component{
           <div className='container_right'>
             <div> {this.state.currentBeer.beername} </div>
             <div>{this.state.currentBeer.category}</div>
-            <div>{this.state.currentBeer.abu}</div>
+            <div>ABU: { ' ' +this.state.currentBeer.abu}%</div>
             <div> ${this.state.currentBeer.price}.00 </div>
           </div>
+
       </div>
+
       <div>{this.state.currentBeer.description}</div>
-      <button className="addtocart">Add to Cart</button>
+
+      <button className="addtocart" onClick={this.addToCart.bind(this)}>Add to Cart</button>
+      <button className="addtocart" onClick={this.removeFromCart.bind(this)}>Remove from Cart</button>
+
     </div>
     : null
 
      return(
 
         <div>
+
+          <div className='cartContainer'>
+
+
+            <div className='price'>
+              <Cart />
+              ${'' + this.state.totalPrice}
+
+              <ul>   {this.state.beerList}  </ul>
+
+            </div>
+
+          </div>
 
           <input
             type="text"
@@ -122,9 +150,8 @@ class List extends React.Component{
             })}
 
           </ul>
+
           {currentBeerDiv}
-
-
 
         </div>
 
