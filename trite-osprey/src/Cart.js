@@ -9,11 +9,7 @@ class Cart extends React.Component {
     return(
       <div>
 
-        <img src={process.env.PUBLIC_URL + `/images/cart.jpg`} style={{width: 80, height: 50}}/>
-
-        <div>
-
-        </div>
+        <img className='cart' src={process.env.PUBLIC_URL + `/images/cart.jpg`} style={{width: 80, height: 80}} alt="broken"/>
 
       </div>
     )

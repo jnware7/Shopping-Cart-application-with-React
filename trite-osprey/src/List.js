@@ -11,17 +11,17 @@ class List extends React.Component{
       searchString: '',
       visible: false,
       active: this.props.active || 0,
-      cartPriceArray: [],
       beerList: [],
-      totalPrice: 0
+      totalPrice: 0,
+      currentBeerObjects: []
     }
+    this.handleClick = this.handleClick.bind(this)
   }
 
   componentWillMount() {
     this.getAllBeers()
   }
 
-  // initial fetch to retreive stored beers from DB
   getAllBeers() {
     fetch('http://localhost:5000/beers', {
       method: 'get',
@@ -42,46 +42,67 @@ class List extends React.Component{
     this.setState({visible: false})
   }
 
-  handleClick(event) {
-    let node = Array.prototype.slice.call(event.currentTarget.children);
-    let index = node.indexOf(event.target)
+  handleClick(event, index) {
     this.setState({visible: true, active: index, currentBeer: this.state.beers[index] })
   }
 
-  addToCart(event){
-    let { cartPriceArray, currentBeer, beerList } = this.state
-    console.log('cartPriceArray', cartPriceArray);
-    cartPriceArray.push(currentBeer.price)
-    const totalPriceArray = this.reduceFunction(cartPriceArray)
+  addToCart() {
+    let { currentBeer, beerList, currentBeerObjects } = this.state
+    currentBeerObjects.push(currentBeer)
     beerList.push(currentBeer.beername)
 
+    let priceArray = [];
+    Object.keys(currentBeerObjects).forEach(function(key) {
+      let val = currentBeerObjects[key]["price"];
+      priceArray.push(val);
+    });
+
+    let cartPrice = priceArray.reduce((a,b) => a + b)
 
     this.setState({
-      cartPriceArray,
-      totalPrice: totalPriceArray,
-      beerList
+      totalPrice: cartPrice,
+      beerList,
+      currentBeerObjects
     })
+
   }
 
-  reduceFunction(array) {
-    return array.reduce((a,b) => a + b)
-  }
+  removeFromCart() {
+    let { currentBeer, beerList, currentBeerObjects } = this.state
 
-  removeFromCart(event){
-    this.setState({cartValue: this.state.cartValue - this.state.currentBeer.price,
-    list: this.state.list - this.state.currentBeer.beername})
-  }
+    let id = currentBeer.id;
+    for (var i = 0; i < currentBeerObjects.length; i++) {
+        if (currentBeerObjects[i].id === id) {
+            currentBeerObjects.splice(i, 1);
+            break;
+        }
+    }
 
-  // componentDidMount() {
-  //     console.log('beers', this.state.beers)
-  //     if ( this.state.beers[0] ) {
-  //        let firstBeerName = this.state.beers[0].beername
-  //        console.log(firstBeerName);
-  //      }
-  // }
+    let priceArray = [0];
+    Object.keys(currentBeerObjects).forEach(function(key) {
+      let val = currentBeerObjects[key]["price"];
+      priceArray.push(val);
+    });
+
+    let beerName = currentBeer.beername;
+    for (var j = 0; j < beerList.length; j++) {
+        if (beerList[j] === beerName) {
+            beerList.splice(j, 1);
+            break;
+        }
+    }
+
+    let cartPrice = priceArray.reduce((a,b) => a + b)
+
+    this.setState({
+      totalPrice: cartPrice,
+      beerList,
+      currentBeerObjects
+    })
+
+  }
 
   render() {
-    // const {beers} = this.props.beers
 
     let beers  = this.state.beers,
         searchString = this.state.searchString.trim().toLowerCase(),
@@ -114,7 +135,7 @@ class List extends React.Component{
 
       </div>
 
-      <div>{this.state.currentBeer.description}</div>
+      <div className='description'>{this.state.currentBeer.description}</div>
 
       <button className="addtocart" onClick={this.addToCart.bind(this)}>Add to Cart</button>
       <button className="addtocart" onClick={this.removeFromCart.bind(this)}>Remove from Cart</button>
@@ -122,30 +143,39 @@ class List extends React.Component{
     </div>
     : null
 
+    const beerView = beers.map(function(value, index) {
+      return (
+      <div  onClick={ () => this.handleClick(event, index) } className="beerdisplay" >
+        <img key={index} src={process.env.PUBLIC_URL + `/images/${value.image}.jpg`} style={{width: 120, height: 180}} alt="broken" />
+      </div>
+      )
+    }, this)
+
+
      return(
 
         <div>
-
+{/*
           <div className='cartContainer'>
 
 
             <div className='price'>
-              <Cart />
+              <Cart className='beercartlist'/>
               ${'' + this.state.totalPrice}
 
               <ul onClick={this.addToCart.bind(this)} >
                 {beerList.map(function(value) {
                   return (
-                    <li>
+                    <div>
                       {value}
-                    </li>
+                    </div>
                   )
                 })}
               </ul>
 
             </div>
 
-          </div>
+          </div> */}
 
           <input
             type="text"
@@ -154,18 +184,32 @@ class List extends React.Component{
             placeholder="Search beer"
           />
 
-          <ul onClick={this.handleClick.bind(this)} >
-            {beers.map(function(value) {
-              return <li className="listclass">
-                {value.brewery + ' ' + value.beername}
-                <img src={process.env.PUBLIC_URL + `/images/${value.image}.jpg`} style={{width: 30, height: 45}} alt="broken" />
-              </li>
-            })}
-
-          </ul>
+          <div className='wrapper'>
+            {beerView}
+          </div>
 
           {currentBeerDiv}
 
+                    <div className='cartContainer'>
+
+
+                      <div className='price'>
+                        <Cart className='beercartlist'/>
+                        ${'' + this.state.totalPrice}
+
+                        <ul onClick={this.addToCart.bind(this)} >
+                          {beerList.map(function(value) {
+                            return (
+                              <div>
+                                {value}
+                              </div>
+                            )
+                          })}
+                        </ul>
+
+                      </div>
+
+                    </div>
         </div>
 
     )

@@ -18,6 +18,7 @@ class App extends Component {
           <h2>Welcome to Beermo</h2>
         </div>
         <List />
+
       </div>
     );
   }
