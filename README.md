@@ -4,7 +4,7 @@ Application with React
 
 Based off of this tutorial: https://scotch.io/tutorials/creating-a-simple-shopping-cart-with-react-js-and-flux
 
-Want to learn how to create a basic shopping cart application? Want to learn how to use react.js? Then this goal is for you! 
+Want to learn how to create a basic shopping cart application? Want to learn how to use react.js? Then this goal is for you!
 ## Context
 
 This goal is important because react is cool to learn. But don't just listen to me, read these quotes from the following leaders in the industry:
@@ -19,18 +19,18 @@ The programming community was initially a bit confused by this approach and didn
 
 "React is a JavaScript library for creating user interfaces by Facebook and Instagram. Many people choose to think of React as the V in [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller).
 
-We built React to solve one problem: building large applications with data that changes over time." 
+We built React to solve one problem: building large applications with data that changes over time."
                             - [_React Facebook Team_](https://facebook.github.io/react/docs/why-react.html)
 ## Specifications
-- [ ] Display a product with several options
-- [ ] Change the price when selecting an option
-- [ ] Add items to the cart
-- [ ] Remove items from the cart
-- [ ] Display the number of items in the cart
-- [ ] Display the total price of items in the cart
-- [ ] Display the total price for each option in the cart based upon quantity
-- [ ] Change our "Add to Cart" button caption to "Sold Out" and disable it when inventory is depleted for a given option
-- [ ] Display the cart after adding a product or clicking the "View Cart" button
+- [x] Display a product with several options
+- [x] Change the price when selecting an option
+- [x] Add items to the cart
+- [x] Remove items from the cart
+- [x] Display the number of items in the cart
+- [x] Display the total price of items in the cart
+- [x] Display the total price for each option in the cart based upon quantity
+- [x] Change our "Add to Cart" button caption to "Sold Out" and disable it when inventory is depleted for a given option
+- [x] Display the cart after adding a product or clicking the "View Cart" button
 ### Required
 
 _Do not remove these specs - they are required for all goals_.
